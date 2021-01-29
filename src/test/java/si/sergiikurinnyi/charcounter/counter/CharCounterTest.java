@@ -1,8 +1,7 @@
 package si.sergiikurinnyi.charcounter.counter;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasKey;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.Matchers.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -31,8 +30,7 @@ class CharCounterTest {
 
         Map<Character, Integer> actual = new LinkedHashMap<>(
                 charCounter.countCharUsage(INPUT_WORDS_WITH_SPECIAL_CHARS_AND_NUMBERS));
-        assertEquals(expected, actual);
-        assertThat(actual, hasKey('1'));
+        assertThat(actual, equalTo(expected));
     }
 
     @Test
@@ -44,7 +42,7 @@ class CharCounterTest {
         expected.put(' ', 1);
 
         Map<Character, Integer> actual = new LinkedHashMap<>(charCounter.countCharUsage(INPUT_NUMBERS));
-        assertEquals(expected, actual);
+        assertThat(actual, equalTo(expected));
     }
 
 }

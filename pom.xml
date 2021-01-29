@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -7,6 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>Char counter program</name>
     <description>Program that counts each type of char present in a string</description>
+    
     <properties>
         <junit.jupiter.engine.version>5.7.0</junit.jupiter.engine.version>
         <mockito.junit.jupiter.version>3.7.7</mockito.junit.jupiter.version>

@@ -1,6 +1,7 @@
 package si.sergiikurinnyi.charcounter.formatter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 class FormatterTest {
 
-   // private final Formatter viewProvider = new Formatter();
     private final Formatter viewFormatter = new Formatter();
 
     @Test
@@ -26,7 +26,7 @@ class FormatterTest {
         String actual = viewFormatter.formatStatView(inputMap);
         String expected = "\"1\" - 4\r\n" + "\"e\" - 2\r\n" + "\"a\" - 1\r\n" + "\"r\" - 5\r\n" + "\"n\" - 1\r\n"
                 + "\"f\" - 1\r\n" + "\"?\" - 3\r\n" + "\"s\" - 1\r\n";
-        assertEquals(expected, actual);
+        assertThat(actual, equalTo(expected));
     }
 
     @Test
@@ -39,7 +39,7 @@ class FormatterTest {
 
         String actual = viewFormatter.formatStatView(inputMap);
         String expected = "\"1\" - 2\r\n" + "\"2\" - 2\r\n" + "\"3\" - 4\r\n" + "\" \" - 1\r\n";
-        assertEquals(expected, actual);
+        assertThat(actual, equalTo(expected));
     }
 
 }

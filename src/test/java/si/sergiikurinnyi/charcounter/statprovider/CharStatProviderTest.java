@@ -1,6 +1,8 @@
 package si.sergiikurinnyi.charcounter.statprovider;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import si.sergiikurinnyi.charcounter.counter.CharCounter;
@@ -53,11 +54,11 @@ class CharStatProviderTest {
     @Test
     void provideCharStatShouldCallValidateIsPresentCountCharUsagePutToCacheFormatStatView() {
         charStatProviderMock.provideCharStat(INPUT_WORDS);
-        Mockito.verify(sentenceValidatorMock).validate(INPUT_WORDS);
-        Mockito.verify(charCacheMock).isPresent(INPUT_WORDS);
-        Mockito.verify(charCounterMock).countCharUsage(INPUT_WORDS);
-        Mockito.verify(charCacheMock).putToCache(INPUT_WORDS, symbolToCount);
-        Mockito.verify(viewFormatterMock).formatStatView(symbolToCount);
+        verify(sentenceValidatorMock).validate(INPUT_WORDS);
+        verify(charCacheMock).isPresent(INPUT_WORDS);
+        verify(charCounterMock).countCharUsage(INPUT_WORDS);
+        verify(charCacheMock).putToCache(INPUT_WORDS, symbolToCount);
+        verify(viewFormatterMock).formatStatView(symbolToCount);
     }
 
     @Test
@@ -65,7 +66,7 @@ class CharStatProviderTest {
         String expected = "\"l\" - 1\r\n" + "\"e\" - 2\r\n" + "\"a\" - 2\r\n" + "\"r\" - 5\r\n" + "\"n\" - 1\r\n"
                 + "\" \" - 1\r\n" + "\"f\" - 1\r\n" + "\"s\" - 1\r\n" + "\"t\" - 1\r\n";
         String actual = charStatProvider.provideCharStat(INPUT_WORDS);
-        assertEquals(expected, actual);
+        assertThat(actual, equalTo(expected));
     }
 
     @Test
@@ -73,7 +74,7 @@ class CharStatProviderTest {
         String expected = "\"L\" - 1\r\n" + "\"E\" - 2\r\n" + "\"A\" - 2\r\n" + "\"R\" - 5\r\n" + "\"N\" - 1\r\n"
                 + "\" \" - 1\r\n" + "\"F\" - 1\r\n" + "\"S\" - 1\r\n" + "\"T\" - 1\r\n";
         String actual = charStatProvider.provideCharStat(INPUT_WORDS_UPPER_CASE);
-        assertEquals(expected, actual);
+        assertThat(actual, equalTo(expected));
     }
 
     @Test
@@ -81,7 +82,7 @@ class CharStatProviderTest {
         String expected = "\"l\" - 1\r\n" + "\"e\" - 2\r\n" + "\"a\" - 2\r\n" + "\"r\" - 5\r\n" + "\"n\" - 1\r\n"
                 + "\" \" - 1\r\n" + "\"f\" - 1\r\n" + "\"s\" - 1\r\n" + "\"t\" - 1\r\n" + "\"1\" - 4\r\n";
         String actual = charStatProvider.provideCharStat(INPUT_NUMBERS_AND_CHARS);
-        assertEquals(expected, actual);
+        assertThat(actual, equalTo(expected));
     }
 
     @Test
@@ -89,7 +90,7 @@ class CharStatProviderTest {
         String expected = "\"l\" - 1\r\n" + "\"e\" - 2\r\n" + "\"a\" - 2\r\n" + "\"r\" - 5\r\n" + "\"n\" - 1\r\n"
                 + "\"!\" - 3\r\n" + "\" \" - 1\r\n" + "\"f\" - 1\r\n" + "\"s\" - 1\r\n" + "\"t\" - 1\r\n";
         String actual = charStatProvider.provideCharStat(INPUT_WORDS_WITH_SPECIAL_CHARS);
-        assertEquals(expected, actual);
+        assertThat(actual, equalTo(expected));
     }
 
     @Test
@@ -98,14 +99,14 @@ class CharStatProviderTest {
                 + "\"f\" - 1\r\n" + "\"?\" - 3\r\n" + "\"s\" - 1\r\n";
         String actual = charStatProvider
                 .provideCharStat(INPUT_WORDS_WITH_SPECIAL_CHARS_AND_NUMBERS);
-        assertEquals(expected, actual);
+        assertThat(actual, equalTo(expected));
     }
 
     @Test
     void provideCharStatShouldReturnResultIfArgumentIsNumbers() {
         String expected = "\"1\" - 2\r\n" + "\"2\" - 2\r\n" + "\"3\" - 4\r\n" + "\" \" - 1\r\n";
         String actual = charStatProvider.provideCharStat(INPUT_NUMBERS);
-        assertEquals(expected, actual);
+        assertThat(actual, equalTo(expected));
     }
 
 }
