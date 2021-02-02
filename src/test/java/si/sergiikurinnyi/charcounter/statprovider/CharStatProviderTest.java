@@ -1,12 +1,17 @@
 package si.sergiikurinnyi.charcounter.statprovider;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -51,6 +56,32 @@ class CharStatProviderTest {
             charCounter, viewFormatter);
     private final Map<Character, Integer> symbolToCount = new LinkedHashMap<>();
 
+    @Test
+    void validateShouldThrowIllegalArgumentExceptionIfArgumentIsNull() {
+    	doThrow(new IllegalArgumentException("Sentence is null"))
+        .when(sentenceValidatorMock).validate(null);
+    	try {
+    		sentenceValidatorMock.validate(null);
+    		fail();
+    	} catch (Exception IllegalArgumentException) {
+    		assertTrue(IllegalArgumentException instanceof IllegalArgumentException);
+    		assertEquals("Sentence is null", IllegalArgumentException.getMessage());
+    	}
+    }
+    
+    @Test
+    void provideCharStatShouldNotCallCountUsageIfCacheContainsArgument() {
+        when(charCacheMock.isPresent(INPUT_WORDS)).thenReturn(true);
+        charStatProviderMock.provideCharStat(INPUT_WORDS);
+        verify(charCounterMock, times(0)).countCharUsage(INPUT_WORDS);
+    }
+    
+    @Test
+    void provideCharStatShouldCallCountCharUsageIfNoArgumentInCache() {
+        charStatProviderMock.provideCharStat(INPUT_WORDS);
+        verify(charCounterMock, times(1)).countCharUsage(INPUT_WORDS);
+    }
+    
     @Test
     void provideCharStatShouldCallValidateIsPresentCountCharUsagePutToCacheFormatStatView() {
         charStatProviderMock.provideCharStat(INPUT_WORDS);
