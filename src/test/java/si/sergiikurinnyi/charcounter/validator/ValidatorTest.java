@@ -11,7 +11,6 @@ class ValidatorTest {
     private static final String EMPTY_INPUT = "";
     private static final String INPUT_NUMBERS = "123 12333";
 
-
     private final Validator sentenceValidator = new Validator();
 
     @Test
